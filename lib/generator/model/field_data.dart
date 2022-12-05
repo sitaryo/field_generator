@@ -35,6 +35,23 @@ class FieldData {
         isListItem = false,
         isTemplate = true;
 
+  copyWith({
+    String? title,
+    int? flex,
+    bool? dragging,
+    bool? isListItem,
+    bool? isTemplate,
+    int? index,
+  }) =>
+      FieldData(
+        title ?? this.title,
+        flex ?? this.flex,
+        dragging ?? this.dragging,
+        isListItem ?? this.isListItem,
+        isTemplate ?? this.isTemplate,
+        index: index ?? this.index,
+      );
+
   @override
   String toString() {
     return 'FieldData{key: $key, title: $title, flex: $flex, dragging: $dragging, isListItem: $isListItem, isTemplate: $isTemplate, index: $index}';

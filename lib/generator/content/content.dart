@@ -73,9 +73,10 @@ class Content extends HookWidget {
           child: data.dragging
               ? ItemPreview(group: data)
               : ItemRow(
+                  item: item,
                   group: data,
                   row: i,
-                  selectIndexes: selectedIndexes.value,
+                  selectIndexes: selectedIndexes,
                   onTap: selectedIndexesChanged,
                 ),
         );
