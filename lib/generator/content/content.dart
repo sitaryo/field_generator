@@ -1,4 +1,4 @@
-import 'package:field_generator/generator/content/item.dart';
+import 'package:field_generator/generator/content/item_row.dart';
 import 'package:field_generator/generator/content/item_dragging.dart';
 import 'package:field_generator/generator/content/item_preview.dart';
 import 'package:field_generator/generator/content/move_layer.dart';
@@ -17,6 +17,7 @@ class Content extends HookWidget {
     final offSet = useRef<Offset?>(null);
     final controller = useRef(ScrollController());
     final selectedIndex = useState<int?>(null);
+    final selectedIndexes = useState<List<int?>>([null, null]);
 
     onMove(DragTargetDetails<FieldDataGroup> detail) {
       final contentDy = offSet.value?.dy;
@@ -56,22 +57,23 @@ class Content extends HookWidget {
           .toList();
     }
 
-    resetSelectedIndex() => selectedIndex.value = null;
+    selectedIndexesChanged(int row, int col) =>
+        selectedIndexes.value = [row, col];
 
-    selectedIndexChanged(int i) => selectedIndex.value = i;
+    resetIndexesChanged() => selectedIndexes.value = [null, null];
 
     listItem(int i, FieldDataGroup data) => LongPressDraggable<FieldDataGroup>(
-          onDragStarted: resetSelectedIndex,
+          onDragStarted: resetIndexesChanged,
           data: FieldDataGroup.listItem(data.data, index: i),
           feedback: ItemDragging(group: data),
           child: data.dragging
               ? ItemPreview(group: data)
-              : selectedIndex.value == i
-                  ? MoveLayer(child: Item(group: data))
-                  : InkWell(
-                      onTap: () => selectedIndexChanged(i),
-                      child: Item(group: data),
-                    ),
+              : ItemRow(
+                  group: data,
+                  row: i,
+                  selectIndexes: selectedIndexes.value,
+                  onTap: selectedIndexesChanged,
+                ),
         );
 
     return Container(

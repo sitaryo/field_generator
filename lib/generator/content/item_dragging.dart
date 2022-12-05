@@ -1,4 +1,4 @@
-import 'package:field_generator/generator/content/item_row.dart';
+import 'package:field_generator/generator/content/item_row_layout.dart';
 import 'package:field_generator/generator/model/field_data.dart';
 import 'package:field_generator/generator/model/field_data_group.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +23,9 @@ class ItemDragging extends HookWidget {
             color: Colors.blueAccent,
           ),
           padding: const EdgeInsets.all(8),
-          child: ItemRow(
+          child: ItemRowLayout(
             group: group,
-            builder:(data)=> Center(
+            builder:(data,i)=> Center(
               child: Text(
                 data.title,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
