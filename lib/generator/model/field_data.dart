@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+
 class FieldData {
+  UniqueKey key = UniqueKey();
   String title;
   int flex;
   bool dragging;
@@ -34,6 +37,6 @@ class FieldData {
 
   @override
   String toString() {
-    return 'FieldData{title: $title, dragging: $dragging, isListItem: $isListItem, isTemplate: $isTemplate, index: $index}\n';
+    return 'FieldData{key: $key, title: $title, flex: $flex, dragging: $dragging, isListItem: $isListItem, isTemplate: $isTemplate, index: $index}';
   }
 }

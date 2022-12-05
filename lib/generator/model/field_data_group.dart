@@ -30,4 +30,9 @@ class FieldDataGroup {
       )   : dragging = false,
         isListItem = false,
         isTemplate = true;
+
+  @override
+  String toString() {
+    return 'FieldDataGroup{data: $data}';
+  }
 }

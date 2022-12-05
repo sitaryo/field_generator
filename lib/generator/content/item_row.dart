@@ -7,9 +7,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class ItemRow extends HookWidget {
   final FieldDataGroup group;
-  final List<int?> selectIndexes;
+  final UniqueKey? selectIndexes;
   final int row;
-  final void Function(int row, int col) onTap;
+  final void Function(UniqueKey key) onTap;
 
   const ItemRow({
     Key? key,
@@ -25,13 +25,12 @@ class ItemRow extends HookWidget {
       cursor: SystemMouseCursors.move,
       child: ItemRowLayout(
         group: group,
-        builder: (data, col) =>
-            selectIndexes[0] == row && selectIndexes[1] == col
-                ? MoveLayer(child: Item(data: data))
-                : InkWell(
-                    onTap: () => onTap(row, col),
-                    child: Item(data: data),
-                  ),
+        builder: (data, col) => selectIndexes == data.key
+            ? MoveLayer(child: Item(data: data))
+            : InkWell(
+                onTap: () => onTap(data.key),
+                child: Item(data: data),
+              ),
       ),
     );
   }

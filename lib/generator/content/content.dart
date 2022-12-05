@@ -3,21 +3,26 @@ import 'package:field_generator/generator/content/item_dragging.dart';
 import 'package:field_generator/generator/content/item_preview.dart';
 import 'package:field_generator/generator/content/move_layer.dart';
 import 'package:field_generator/generator/model/field_data.dart';
+import 'package:field_generator/generator/model/selected_indx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../model/field_data_group.dart';
 
 class Content extends HookWidget {
-  const Content({Key? key}) : super(key: key);
+  final ValueNotifier<List<FieldDataGroup>> item;
+  final ValueNotifier<UniqueKey?> selectedIndexes;
+
+  const Content({
+    Key? key,
+    required this.item,
+    required this.selectedIndexes,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final item = useState<List<FieldDataGroup>>([]);
     final offSet = useRef<Offset?>(null);
     final controller = useRef(ScrollController());
-    final selectedIndex = useState<int?>(null);
-    final selectedIndexes = useState<List<int?>>([null, null]);
 
     onMove(DragTargetDetails<FieldDataGroup> detail) {
       final contentDy = offSet.value?.dy;
@@ -57,10 +62,9 @@ class Content extends HookWidget {
           .toList();
     }
 
-    selectedIndexesChanged(int row, int col) =>
-        selectedIndexes.value = [row, col];
+    selectedIndexesChanged(key) => selectedIndexes.value = key;
 
-    resetIndexesChanged() => selectedIndexes.value = [null, null];
+    resetIndexesChanged() => selectedIndexes.value = null;
 
     listItem(int i, FieldDataGroup data) => LongPressDraggable<FieldDataGroup>(
           onDragStarted: resetIndexesChanged,

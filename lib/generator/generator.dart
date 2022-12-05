@@ -1,5 +1,8 @@
 import 'package:field_generator/generator/content/content.dart';
 import 'package:field_generator/generator/field/field_list.dart';
+import 'package:field_generator/generator/model/field_data_group.dart';
+import 'package:field_generator/generator/model/selected_indx.dart';
+import 'package:field_generator/generator/properties/properties_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -8,12 +11,19 @@ class Generator extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final item = useState<List<FieldDataGroup>>([]);
+    final selectedIndexes = useState<UniqueKey?>(null);
+
     return Scaffold(
-      backgroundColor: Color(0xffebecf0),
+      backgroundColor: const Color(0xffebecf0),
       body: Row(
         children: [
-          FieldList(),
-          Content(),
+          const FieldList(),
+          Content(item: item, selectedIndexes: selectedIndexes),
+          PropertiesCard(
+            item: item,
+            selectedIndexes: selectedIndexes,
+          ),
         ],
       ),
     );
