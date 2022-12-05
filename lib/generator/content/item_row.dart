@@ -5,8 +5,6 @@ import 'package:field_generator/generator/model/field_data_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-// todo item -> item_row
-//  item_row -> item_row_layout
 class ItemRow extends HookWidget {
   final FieldDataGroup group;
   final List<int?> selectIndexes;
