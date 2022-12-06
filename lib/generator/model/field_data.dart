@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 
-class FieldData {
+abstract class FieldData<V> {
   UniqueKey key = UniqueKey();
   String name;
   int percentage;
+  String type;
+  String? description;
+  V? defaultValue;
 
-  FieldData(this.name, this.percentage);
+  FieldData(
+    this.name,
+    this.percentage,
+    this.type, {
+    this.defaultValue,
+    this.description,
+  });
 
-  copyWith({String? name, int? percentage}) =>
-      FieldData(name ?? this.name, percentage ?? this.percentage);
+  @protected
+  FieldData<V> clone();
 
   @override
   String toString() {
-    return 'FieldData{key: $key, title: $name, percentage: $percentage}';
+    return 'FieldData{key: $key, name: $name, percentage: $percentage, description: $description, defaultValue: $defaultValue}';
   }
 }

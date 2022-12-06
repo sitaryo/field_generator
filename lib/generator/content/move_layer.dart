@@ -41,7 +41,7 @@ class MoveLayer extends HookWidget {
 
     renderIfNotNull<T>(T? nullable, Widget Function(T) item) {
       if (nullable == null) {
-        return const SizedBox();
+        return const SizedBox(width: 24,height: 24,);
       }
       return item.call(nullable);
     }

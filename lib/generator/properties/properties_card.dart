@@ -1,5 +1,9 @@
 import 'package:field_generator/generator/model/field_data.dart';
 import 'package:field_generator/generator/model/field_data_group.dart';
+import 'package:field_generator/generator/properties/default_value_properties.dart';
+import 'package:field_generator/generator/properties/description_properties.dart';
+import 'package:field_generator/generator/properties/name_properties.dart';
+import 'package:field_generator/generator/properties/percentage_properites.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -40,6 +44,8 @@ class PropertiesCard extends HookWidget {
       return const SizedBox();
     }
 
+    refreshListData() => item.value = [...item.value];
+
     onFlexChanged(int flex) {
       if (data.percentage == flex) {
         return;
@@ -63,7 +69,7 @@ class PropertiesCard extends HookWidget {
         ..removeAt(row)
         ..insertAll(row, groupToInsert)
         ..asMap().forEach((i, element) => element.index = i);
-      item.value = [...item.value];
+      refreshListData();
     }
 
     return Padding(
@@ -76,28 +82,22 @@ class PropertiesCard extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              data.name,
+              data.type,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
                   ?.copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 16),
-            ToggleButtons(
-              onPressed: (flex) => onFlexChanged(flex + 1),
+            NameProperties(data: data, refreshListData: refreshListData),
+            DescriptionProperties(data: data, refreshListData: refreshListData),
+            DefaultValueProperties(
+              data: data,
+              refreshListData: refreshListData,
+            ),
+            PercentageProperties(
               isSelected: selectedFlex(data),
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              selectedBorderColor: Colors.blue[700],
-              selectedColor: Colors.white,
-              fillColor: Colors.blue[200],
-              color: Colors.blue[400],
-              children: const [
-                Text("25%"),
-                Text("50%"),
-                Text("75%"),
-                Text("100%"),
-              ],
-            )
+              onPressed: onFlexChanged,
+            ),
           ],
         ),
       ),

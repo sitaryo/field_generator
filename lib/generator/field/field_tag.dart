@@ -3,14 +3,16 @@ import 'package:field_generator/generator/model/field_data_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../model/fields/single_text.dart';
+
 class FieldTag extends HookWidget {
   final IconData icon;
-  final String text;
+  final FieldData Function(int percentage) dataBuilder;
 
-  const FieldTag({
+  const FieldTag(
+    this.icon,
+    this.dataBuilder, {
     Key? key,
-    required this.icon,
-    required this.text,
   }) : super(key: key);
 
   @override
@@ -18,6 +20,7 @@ class FieldTag extends HookWidget {
     const normalColor = Colors.black;
     final focusColor = Theme.of(context).colorScheme.primary;
     final color = useState(normalColor);
+    final data = useState(dataBuilder(4));
 
     onHover(bool hasHover) => color.value = hasHover ? focusColor : normalColor;
 
@@ -46,7 +49,7 @@ class FieldTag extends HookWidget {
                 width: 8,
               ),
               Text(
-                text,
+                data.value.name,
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium
@@ -79,7 +82,7 @@ class FieldTag extends HookWidget {
               width: 8,
             ),
             Text(
-              text,
+              data.value.name,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: color.value,
                     fontWeight: FontWeight.w500,
@@ -90,8 +93,12 @@ class FieldTag extends HookWidget {
       ),
     );
     return Draggable<FieldDataGroup>(
-      data: FieldDataGroup.templateItem([FieldData(text, 4)]),
-      onDragEnd: (d) => color.value = normalColor,
+      data: FieldDataGroup.templateItem([data.value]),
+      onDragEnd: (d) {
+        color.value = normalColor;
+        // 加入 list 之后生成新的 data ，否则 list 内将会有多个相同元素
+        data.value = dataBuilder(4);
+      },
       feedback: childWhenDragging,
       child: child,
     );

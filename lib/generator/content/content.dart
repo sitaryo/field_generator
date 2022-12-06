@@ -141,9 +141,7 @@ class ContentHeader extends HookWidget {
           Row(
             children: [
               ElevatedButton(onPressed: () {}, child: const Text("保存")),
-              const SizedBox(
-                width: 8,
-              ),
+              const SizedBox(width: 8),
               ElevatedButton(onPressed: () {}, child: const Text("返回")),
             ],
           ),

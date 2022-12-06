@@ -78,7 +78,7 @@ class ItemRow extends HookWidget {
     }
 
     copy(FieldData data) {
-      final newOne = data.copyWith();
+      final newOne = data.clone();
       item.value.insert(row + 1, FieldDataGroup.listItem([newOne]));
       selectIndexes.value = newOne.key;
       rangeItem();
