@@ -24,6 +24,7 @@ class DefaultValueProperties extends HookWidget {
         case Boolean:
           final d = data as Boolean;
           return _BooleanDefaultValue(
+            data: data,
             defaultValue: d.defaultValue ?? false,
             onChanged: (v) {
               d.defaultValue = v;
@@ -34,6 +35,7 @@ class DefaultValueProperties extends HookWidget {
         case MultipleText:
         case Website:
           return _StringDefaultValue(
+            data: data,
             defaultValue: data.defaultValue as String?,
             onChanged: (v) {
               data.defaultValue = v ?? "";
@@ -60,12 +62,14 @@ class DefaultValueProperties extends HookWidget {
 
 class _BooleanDefaultValue extends HookWidget {
   final bool defaultValue;
+  final FieldData data;
   final void Function(bool?) onChanged;
 
   const _BooleanDefaultValue({
     Key? key,
     required this.defaultValue,
     required this.onChanged,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -85,6 +89,7 @@ class _BooleanDefaultValue extends HookWidget {
 }
 
 class _StringDefaultValue extends HookWidget {
+  final FieldData data;
   final String? defaultValue;
   final void Function(String?) onChanged;
 
@@ -92,6 +97,7 @@ class _StringDefaultValue extends HookWidget {
     Key? key,
     required this.defaultValue,
     required this.onChanged,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -100,7 +106,7 @@ class _StringDefaultValue extends HookWidget {
 
     useEffect(() {
       controller.value.text = defaultValue ?? "";
-    }, []);
+    }, [data.key]);
 
     return TextField(
       controller: controller.value,

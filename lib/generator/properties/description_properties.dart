@@ -17,7 +17,7 @@ class DescriptionProperties extends HookWidget {
     final controller = useRef(TextEditingController());
 
     useEffect(() {
-      controller.value.text = data.name;
+      controller.value.text = data.description ?? "";
     }, [data.key]);
 
     descriptionChanged(String? s) {
@@ -31,7 +31,10 @@ class DescriptionProperties extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text("提示文字"),
-          TextField(onChanged: descriptionChanged),
+          TextField(
+            controller: controller.value,
+            onChanged: descriptionChanged,
+          ),
         ],
       ),
     );

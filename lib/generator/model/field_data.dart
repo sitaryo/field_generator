@@ -1,6 +1,7 @@
+import 'package:field_generator/generator/model/to_json.dart';
 import 'package:flutter/material.dart';
 
-abstract class FieldData<V> {
+abstract class FieldData<V> extends ToJson {
   UniqueKey key = UniqueKey();
   String name;
   int percentage;
@@ -18,6 +19,15 @@ abstract class FieldData<V> {
 
   @protected
   FieldData<V> clone();
+
+  @override
+  Map toJson() => {
+        "name": name,
+        "percentage": percentage,
+        "type": type,
+        "description": description,
+        "defaultValue": defaultValue,
+      };
 
   @override
   String toString() {
