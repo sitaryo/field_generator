@@ -90,7 +90,7 @@ class FieldTag extends HookWidget {
       ),
     );
     return Draggable<FieldDataGroup>(
-      data: FieldDataGroup.templateItem([FieldData.templateItem(text, 4)]),
+      data: FieldDataGroup.templateItem([FieldData(text, 4)]),
       onDragEnd: (d) => color.value = normalColor,
       feedback: childWhenDragging,
       child: child,

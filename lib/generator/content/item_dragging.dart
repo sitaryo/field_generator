@@ -27,7 +27,7 @@ class ItemDragging extends HookWidget {
             group: group,
             builder:(data,i)=> Center(
               child: Text(
-                data.title,
+                data.name,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: Colors.white,

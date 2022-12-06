@@ -1,7 +1,6 @@
 import 'package:field_generator/generator/content/content.dart';
 import 'package:field_generator/generator/field/field_list.dart';
 import 'package:field_generator/generator/model/field_data_group.dart';
-import 'package:field_generator/generator/model/selected_indx.dart';
 import 'package:field_generator/generator/properties/properties_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

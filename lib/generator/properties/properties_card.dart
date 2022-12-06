@@ -29,7 +29,7 @@ class PropertiesCard extends HookWidget {
 
   List<bool> selectedFlex(FieldData data) {
     final selected = List.filled(4, false);
-    selected[data.flex - 1] = true;
+    selected[data.percentage - 1] = true;
     return selected;
   }
 
@@ -41,20 +41,20 @@ class PropertiesCard extends HookWidget {
     }
 
     onFlexChanged(int flex) {
-      if (data.flex == flex) {
+      if (data.percentage == flex) {
         return;
       }
-      data.flex = flex;
+      data.percentage = flex;
       // 改变 flex 之后，重新整理布局。
       // 如果当前行的 flex 总数大于4，则将该行分成 flex 总数 <= 4 的若干行
       final row = getCurrentRowIndex();
       var f = 0;
       List<FieldDataGroup> groupToInsert = [FieldDataGroup.listItem([])];
       for (var value in item.value[row].data) {
-        f += value.flex;
+        f += value.percentage;
         if (f > 4) {
           groupToInsert.add(FieldDataGroup.listItem([value]));
-          f = value.flex;
+          f = value.percentage;
         } else {
           groupToInsert.last.data.add(value);
         }
@@ -76,14 +76,13 @@ class PropertiesCard extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              data.title,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+              data.name,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             ToggleButtons(
               onPressed: (flex) => onFlexChanged(flex + 1),
               isSelected: selectedFlex(data),

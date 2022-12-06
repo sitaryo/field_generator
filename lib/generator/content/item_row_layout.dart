@@ -12,13 +12,13 @@ class ItemRowLayout extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flexCount = group.data.map((e) => e.flex).reduce((a, b) => a + b);
+    final flexCount = group.data.map((e) => e.percentage).reduce((a, b) => a + b);
     return Row(
       children: [
         ...group.data
             .asMap()
             .map((i, e) =>
-                MapEntry(i, Expanded(flex: e.flex, child: builder(e, i))))
+                MapEntry(i, Expanded(flex: e.percentage, child: builder(e, i))))
             .values
             .toList(),
         if (flexCount < 4)

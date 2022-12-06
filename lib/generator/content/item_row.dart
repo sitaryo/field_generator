@@ -38,12 +38,12 @@ class ItemRow extends HookWidget {
       if (cur.data.isEmpty) {
         item.value.removeAt(row);
       }
-      var other = 4 - prev.data.map((e) => e.flex).reduce((a, b) => a + b);
-      data.flex = math.min(other, data.flex);
+      var other = 4 - prev.data.map((e) => e.percentage).reduce((a, b) => a + b);
+      data.percentage = math.min(other, data.percentage);
       prev.data.add(data);
       if (other == 0) {
         for (var e in prev.data) {
-          e.flex = prev.data.length == 2 ? 2 : 1;
+          e.percentage = prev.data.length == 2 ? 2 : 1;
         }
       }
       rangeItem();
@@ -58,7 +58,7 @@ class ItemRow extends HookWidget {
         item.value.insert(row + 1, c);
       } else {
         // move item to a new row
-        data.flex = 4;
+        data.percentage = 4;
         group.data.removeAt(col);
         item.value.insert(row + 1, FieldDataGroup.listItem([data]));
       }

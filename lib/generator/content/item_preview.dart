@@ -27,7 +27,7 @@ class ItemPreview extends HookWidget {
           ),
           child: Center(
             child: Text(
-              data.title,
+              data.name,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
