@@ -9,26 +9,26 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class PropertiesCard extends HookWidget {
   final ValueNotifier<List<FieldDataGroup>> item;
-  final ValueNotifier<UniqueKey?> selectedIndexes;
+  final ValueNotifier<UniqueKey?> selectedItem;
 
   const PropertiesCard({
     Key? key,
     required this.item,
-    required this.selectedIndexes,
+    required this.selectedItem,
   }) : super(key: key);
 
   FieldData? getCurrentSelectedData() {
-    if (selectedIndexes.value == null) {
+    if (selectedItem.value == null) {
       return null;
     }
     return item.value
         .expand((e) => e.data)
-        .firstWhere((e) => e.key == selectedIndexes.value);
+        .firstWhere((e) => e.key == selectedItem.value);
   }
 
   int getCurrentRowIndex() {
     return item.value
-        .indexWhere((e) => e.data.any((d) => d.key == selectedIndexes.value));
+        .indexWhere((e) => e.data.any((d) => d.key == selectedItem.value));
   }
 
   List<bool> selectedFlex(FieldData data) {

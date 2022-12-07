@@ -1,26 +1,21 @@
 import 'dart:convert';
 
-import 'package:field_generator/generator/content/item_row.dart';
 import 'package:field_generator/generator/content/item_dragging.dart';
 import 'package:field_generator/generator/content/item_preview.dart';
-import 'package:field_generator/generator/content/move_layer.dart';
-import 'package:field_generator/generator/model/field_data.dart';
-import 'package:field_generator/generator/model/selected_indx.dart';
+import 'package:field_generator/generator/content/item_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../model/field_data_group.dart';
 
-String dataString = "";
-
 class Content extends HookWidget {
   final ValueNotifier<List<FieldDataGroup>> item;
-  final ValueNotifier<UniqueKey?> selectedIndexes;
+  final ValueNotifier<UniqueKey?> selectedItem;
 
   const Content({
     Key? key,
     required this.item,
-    required this.selectedIndexes,
+    required this.selectedItem,
   }) : super(key: key);
 
   @override
@@ -66,12 +61,12 @@ class Content extends HookWidget {
           .toList();
     }
 
-    selectedIndexesChanged(key) => selectedIndexes.value = key;
+    selectedItemChanged(key) => selectedItem.value = key;
 
-    resetIndexesChanged() => selectedIndexes.value = null;
+    resetItem() => selectedItem.value = null;
 
     listItem(int i, FieldDataGroup data) => LongPressDraggable<FieldDataGroup>(
-          onDragStarted: resetIndexesChanged,
+          onDragStarted: resetItem,
           data: FieldDataGroup.listItem(data.data, index: i),
           feedback: ItemDragging(group: data),
           child: data.dragging
@@ -80,10 +75,90 @@ class Content extends HookWidget {
                   item: item,
                   group: data,
                   row: i,
-                  selectIndexes: selectedIndexes,
-                  onTap: selectedIndexesChanged,
+                  selectIndexes: selectedItem,
+                  onTap: selectedItemChanged,
                 ),
         );
+
+    save() {
+      final data = jsonEncode(item.value.map((e) => e.toJson()).toList());
+      showDialog(
+          context: context,
+          builder: (c) {
+            return SizedBox(
+              width: 800,
+              child: SimpleDialog(
+                contentPadding: const EdgeInsets.all(16),
+                title: const Text("页面数据如下："),
+                children: [
+                  SizedBox(
+                    width: 800,
+                    child: Column(
+                      children: [
+                        SelectableText(data),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text("关闭"),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          });
+    }
+
+    read() {
+      showDialog(
+          context: context,
+          builder: (c) {
+            String data = '';
+            return SimpleDialog(
+              contentPadding: const EdgeInsets.all(16),
+              title: const Text("请粘贴表单数据："),
+              children: [
+                SizedBox(
+                  width: 800,
+                  child: Column(
+                    children: [
+                      TextField(onChanged: (String s) => data = s),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              if(data.isNotEmpty){
+                                item.value = List.from(jsonDecode(data))
+                                    .map((e) => FieldDataGroup.fromJson(e))
+                                    .toList();
+                                selectedItem.value = null;
+                              }
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("导入"),
+                          ),
+                          const SizedBox(width: 8),
+                          ElevatedButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text("取消"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          });
+    }
 
     return Container(
       color: Colors.white,
@@ -93,17 +168,8 @@ class Content extends HookWidget {
       child: Column(
         children: [
           ContentHeader(
-            save: () {
-              print(item.value.map((e) => e.toJson()).toList());
-              dataString =
-                  jsonEncode(item.value.map((e) => e.toJson()).toList());
-              print(dataString);
-            },
-            read: () {
-              item.value = List.from(jsonDecode(dataString))
-                  .map((e) => FieldDataGroup.fromJson(e))
-                  .toList();
-            },
+            save: save,
+            read: read,
           ),
           Expanded(
             child: Padding(

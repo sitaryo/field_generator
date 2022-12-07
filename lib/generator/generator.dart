@@ -11,17 +11,17 @@ class Generator extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final item = useState<List<FieldDataGroup>>([]);
-    final selectedIndexes = useState<UniqueKey?>(null);
+    final selectedItem = useState<UniqueKey?>(null);
 
     return Scaffold(
       backgroundColor: const Color(0xffebecf0),
       body: Row(
         children: [
           const FieldList(),
-          Content(item: item, selectedIndexes: selectedIndexes),
+          Content(item: item, selectedItem: selectedItem),
           PropertiesCard(
             item: item,
-            selectedIndexes: selectedIndexes,
+            selectedItem: selectedItem,
           ),
         ],
       ),
