@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class PercentageProperties extends HookWidget {
+class PercentageProperties extends StatelessWidget {
   final List<bool> isSelected;
   final void Function(int) onPressed;
 

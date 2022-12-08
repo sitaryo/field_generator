@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:field_generator/generator/content/item_dragging.dart';
 import 'package:field_generator/generator/content/item_preview.dart';
 import 'package:field_generator/generator/content/item_row.dart';
+import 'package:field_generator/generator/content/layout_properties.dart';
+import 'package:field_generator/generator/sized_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -21,14 +23,14 @@ class Content extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final offSet = useRef<Offset?>(null);
-    final controller = useRef(ScrollController());
+    final controller = useScrollController();
 
     onMove(DragTargetDetails<FieldDataGroup> detail) {
       final contentDy = offSet.value?.dy;
-      final listDy = controller.value.offset;
+      final listDy = controller.offset;
       if (contentDy != null) {
         final dy = detail.offset.dy - contentDy + listDy;
-        final index = (dy / 100).round();
+        final index = (dy / itemTotalHeight).round();
         final newList = item.value
             .where((element) => detail.data.isTemplate
                 // 如果是字段库中移入则排除 element.dragging 为 true 元素
@@ -96,7 +98,7 @@ class Content extends HookWidget {
                     child: Column(
                       children: [
                         SelectableText(data),
-                        const SizedBox(height: 8),
+                        h8,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -129,13 +131,13 @@ class Content extends HookWidget {
                   child: Column(
                     children: [
                       TextField(onChanged: (String s) => data = s),
-                      const SizedBox(height: 8),
+                      h8,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              if(data.isNotEmpty){
+                              if (data.isNotEmpty) {
                                 item.value = List.from(jsonDecode(data))
                                     .map((e) => FieldDataGroup.fromJson(e))
                                     .toList();
@@ -145,7 +147,7 @@ class Content extends HookWidget {
                             },
                             child: const Text("导入"),
                           ),
-                          const SizedBox(width: 8),
+                          w8,
                           ElevatedButton(
                             onPressed: () => Navigator.of(context).pop(),
                             child: const Text("取消"),
@@ -184,7 +186,7 @@ class Content extends HookWidget {
                       ?.localToGlobal(Offset.zero);
                   return ListView.builder(
                     padding: const EdgeInsets.only(bottom: 80),
-                    controller: controller.value,
+                    controller: controller,
                     itemCount: item.value.length,
                     itemBuilder: (_, i) => listItem(i, item.value[i]),
                   );
@@ -202,7 +204,7 @@ class Content extends HookWidget {
   }
 }
 
-class ContentHeader extends HookWidget {
+class ContentHeader extends StatelessWidget {
   final VoidCallback save;
   final VoidCallback read;
 
@@ -227,7 +229,7 @@ class ContentHeader extends HookWidget {
           Row(
             children: [
               ElevatedButton(onPressed: save, child: const Text("保存")),
-              const SizedBox(width: 8),
+              w8,
               ElevatedButton(onPressed: read, child: const Text("读取")),
             ],
           ),

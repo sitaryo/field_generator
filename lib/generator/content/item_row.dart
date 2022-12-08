@@ -1,13 +1,13 @@
+import 'dart:math' as math;
+
 import 'package:field_generator/generator/content/item.dart';
 import 'package:field_generator/generator/content/item_row_layout.dart';
 import 'package:field_generator/generator/content/move_layer.dart';
 import 'package:field_generator/generator/model/field_data.dart';
 import 'package:field_generator/generator/model/field_data_group.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'dart:math' as math;
 
-class ItemRow extends HookWidget {
+class ItemRow extends StatelessWidget {
   final ValueNotifier<List<FieldDataGroup>> item;
   final FieldDataGroup group;
   final ValueNotifier<UniqueKey?> selectIndexes;
@@ -38,7 +38,8 @@ class ItemRow extends HookWidget {
       if (cur.data.isEmpty) {
         item.value.removeAt(row);
       }
-      var other = 4 - prev.data.map((e) => e.percentage).reduce((a, b) => a + b);
+      var other =
+          4 - prev.data.map((e) => e.percentage).reduce((a, b) => a + b);
       data.percentage = math.min(other, data.percentage);
       prev.data.add(data);
       if (other == 0) {

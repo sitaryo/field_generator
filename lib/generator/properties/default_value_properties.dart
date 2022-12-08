@@ -7,7 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../model/fields/single_text.dart';
 
-class DefaultValueProperties extends HookWidget {
+class DefaultValueProperties extends StatelessWidget {
   final FieldData data;
   final VoidCallback refreshListData;
 

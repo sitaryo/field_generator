@@ -4,10 +4,10 @@ import 'package:field_generator/generator/model/fields/default_item_data.dart';
 import 'package:field_generator/generator/model/fields/multiple_text.dart';
 import 'package:field_generator/generator/model/fields/single_text.dart';
 import 'package:field_generator/generator/model/fields/website.dart';
+import 'package:field_generator/generator/sized_box.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class FieldList extends HookWidget {
+class FieldList extends StatelessWidget {
   const FieldList({Key? key}) : super(key: key);
 
   @override
@@ -23,9 +23,7 @@ class FieldList extends HookWidget {
                   fontWeight: FontWeight.w700,
                 ),
           ),
-          const SizedBox(
-            height: 16,
-          ),
+          h16,
           SizedBox(
             width: 260,
             child: Wrap(

@@ -1,3 +1,4 @@
+import 'package:field_generator/generator/content/items/common/use_text_field_controller.dart';
 import 'package:field_generator/generator/model/field_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,11 +15,7 @@ class NameProperties extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = useRef(TextEditingController());
-
-    useEffect(() {
-      controller.value.text = data.name;
-    }, [data.key]);
+    final controller = useTextFieldController(data, () => data.name, data.key);
 
     nameChanged(String? s) {
       data.name = s ?? "";
@@ -32,7 +29,7 @@ class NameProperties extends HookWidget {
         children: [
           const Text("标识名"),
           TextField(
-            controller: controller.value,
+            controller: controller,
             onChanged: nameChanged,
           ),
         ],

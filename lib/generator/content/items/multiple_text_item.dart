@@ -1,6 +1,9 @@
+import 'package:field_generator/generator/content/items/common/item_title.dart';
 import 'package:field_generator/generator/model/fields/multiple_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+
+import 'common/use_text_field_controller.dart';
 
 class MultipleTextItem extends HookWidget {
   final MultipleText data;
@@ -12,32 +15,24 @@ class MultipleTextItem extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = useRef(TextEditingController());
+    final controller = useTextFieldController(
+      data,
+      () => data.defaultValue ?? "",
+      data.defaultValue,
+    );
 
-    useEffect(() {
-      controller.value.text = data.defaultValue ?? "";
-    }, [data.defaultValue]);
-
-    return Container(
-      height: 84,
-      width: 800,
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "${data.name}${data.description != null ? "(${data.description})" : ""}",
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ItemTitle(data: data),
+        TextField(
+          controller: controller,
+          decoration: const InputDecoration(
+            enabled: false,
+            isDense: true,
           ),
-          TextField(
-            controller: controller.value,
-            decoration: const InputDecoration(
-              enabled: false,
-              isDense: true,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

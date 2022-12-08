@@ -1,7 +1,7 @@
+import 'package:field_generator/generator/sized_box.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class MoveLayer extends HookWidget {
+class MoveLayer extends StatelessWidget {
   final Widget child;
   final VoidCallback? moveUp;
   final VoidCallback? moveDown;
@@ -39,18 +39,20 @@ class MoveLayer extends HookWidget {
       );
     }
 
-    renderIfNotNull<T>(T? nullable, Widget Function(T) item) {
-      if (nullable == null) {
-        return const SizedBox(width: 24,height: 24,);
-      }
-      return item.call(nullable);
-    }
+    renderIfNotNull<T>(T? nullable, Widget Function(T) item) =>
+        nullable == null ? square24 : item.call(nullable);
 
     return Stack(
       children: [
         Opacity(
           opacity: 0.2,
-          child: Container(color: Colors.blueAccent, width: 800, height: 100),
+          child: Container(
+            color: Colors.blueAccent,
+            width: 800,
+            height: 84,
+            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
+          ),
         ),
         child,
         SizedBox(
@@ -86,12 +88,12 @@ class MoveLayer extends HookWidget {
                         copy,
                         (action) => iconButton(Icons.copy, action),
                       ),
-                      const SizedBox(width: 8),
+                      w8,
                       renderIfNotNull(
                         delete,
                         (action) => iconButton(Icons.delete, action),
                       ),
-                      const SizedBox(width: 16),
+                      w16,
                     ],
                   ),
                 ],

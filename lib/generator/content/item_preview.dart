@@ -2,9 +2,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:field_generator/generator/content/item_row_layout.dart';
 import 'package:field_generator/generator/model/field_data_group.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class ItemPreview extends HookWidget {
+class ItemPreview extends StatelessWidget {
   final FieldDataGroup group;
 
   const ItemPreview({Key? key, required this.group}) : super(key: key);

@@ -1,9 +1,8 @@
 import 'package:field_generator/generator/model/field_data.dart';
 import 'package:field_generator/generator/model/field_data_group.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class ItemRowLayout extends HookWidget {
+class ItemRowLayout extends StatelessWidget {
   final FieldDataGroup group;
   final Widget Function(FieldData data, int index) builder;
 
@@ -12,7 +11,8 @@ class ItemRowLayout extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flexCount = group.data.map((e) => e.percentage).reduce((a, b) => a + b);
+    final flexCount =
+        group.data.map((e) => e.percentage).reduce((a, b) => a + b);
     return Row(
       children: [
         ...group.data

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../model/fields/single_text.dart';
+import '../sized_box.dart';
 
 class FieldTag extends HookWidget {
   final IconData icon;
@@ -24,74 +25,43 @@ class FieldTag extends HookWidget {
 
     onHover(bool hasHover) => color.value = hasHover ? focusColor : normalColor;
 
-    final child = Container(
-      width: 125,
-      height: 35,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black12),
-        borderRadius: const BorderRadius.all(Radius.circular(4)),
-        color: Colors.white,
-      ),
-      child: InkWell(
-        onHover: onHover,
-        onTap: () => {},
-        child: Center(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 16,
-                color: color.value,
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(
-                data.value.name,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: color.value, fontWeight: FontWeight.w500),
-              ),
-            ],
+    final content = Center(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 16,
+            color: color.value,
           ),
-        ),
+          w8,
+          Text(
+            data.value.name,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: color.value, fontWeight: FontWeight.w500),
+          ),
+        ],
       ),
     );
-    final childWhenDragging = Container(
-      width: 125,
-      height: 35,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black12),
-        borderRadius: const BorderRadius.all(Radius.circular(4)),
-        color: Colors.white,
-      ),
-      child: Center(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 16,
-              color: color.value,
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Text(
-              data.value.name,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: color.value,
-                    fontWeight: FontWeight.w500,
-                  ),
-            ),
-          ],
+
+    child(bool dragging) {
+      return Container(
+        width: 125,
+        height: 35,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black12),
+          borderRadius: const BorderRadius.all(Radius.circular(4)),
+          color: Colors.white,
         ),
-      ),
-    );
+        child: dragging
+            ? content
+            : InkWell(onHover: onHover, onTap: () => {}, child: content),
+      );
+    }
+
     return Draggable<FieldDataGroup>(
       data: FieldDataGroup.templateItem([data.value]),
       onDragEnd: (d) {
@@ -99,8 +69,8 @@ class FieldTag extends HookWidget {
         // 加入 list 之后生成新的 data ，否则 list 内将会有多个相同元素
         data.value = dataBuilder(4);
       },
-      feedback: childWhenDragging,
-      child: child,
+      feedback: child(true),
+      child: child(false),
     );
   }
 }
