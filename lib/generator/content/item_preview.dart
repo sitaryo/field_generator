@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ItemPreview extends StatelessWidget {
   final FieldDataGroup group;
 
-  const ItemPreview({Key? key, required this.group}) : super(key: key);
+  const ItemPreview({super.key, required this.group});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ItemPreview extends StatelessWidget {
         builder: (data, i) => Container(
           height: 68,
           width: 800,
-          margin: EdgeInsets.all(8),
+          margin: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             color: Color(0xffebecf0),

@@ -6,8 +6,7 @@ class ItemRowLayout extends StatelessWidget {
   final FieldDataGroup group;
   final Widget Function(FieldData data, int index) builder;
 
-  const ItemRowLayout({Key? key, required this.group, required this.builder})
-      : super(key: key);
+  const ItemRowLayout({super.key, required this.group, required this.builder});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class ItemRowLayout extends StatelessWidget {
             .map((i, e) =>
                 MapEntry(i, Expanded(flex: e.percentage, child: builder(e, i))))
             .values
-            .toList(),
+            ,
         if (flexCount < 4)
           Expanded(
             flex: 4 - flexCount,

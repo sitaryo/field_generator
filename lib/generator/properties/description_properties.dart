@@ -10,8 +10,8 @@ class DescriptionProperties extends HookWidget {
   const DescriptionProperties({
     required this.data,
     required this.refreshListData,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

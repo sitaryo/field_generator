@@ -9,9 +9,9 @@ class MultipleTextItem extends HookWidget {
   final MultipleText data;
 
   const MultipleTextItem({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

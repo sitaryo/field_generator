@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ItemDragging extends StatelessWidget {
   final FieldDataGroup group;
 
-  const ItemDragging({Key? key, required this.group}) : super(key: key);
+  const ItemDragging({super.key, required this.group});
 
   @override
   Widget build(BuildContext context) {

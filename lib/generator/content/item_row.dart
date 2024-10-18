@@ -15,13 +15,13 @@ class ItemRow extends StatelessWidget {
   final void Function(UniqueKey key) onTap;
 
   const ItemRow({
-    Key? key,
+    super.key,
     required this.item,
     required this.group,
     required this.row,
     required this.selectIndexes,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

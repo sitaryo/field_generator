@@ -11,10 +11,10 @@ class PropertiesCard extends StatelessWidget {
   final ValueNotifier<UniqueKey?> selectedItem;
 
   const PropertiesCard({
-    Key? key,
+    super.key,
     required this.item,
     required this.selectedItem,
-  }) : super(key: key);
+  });
 
   FieldData? getCurrentSelectedData() {
     if (selectedItem.value == null) {

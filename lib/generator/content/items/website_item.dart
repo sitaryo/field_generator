@@ -8,9 +8,9 @@ class WebsiteItem extends HookWidget {
   final Website data;
 
   const WebsiteItem({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,11 @@ class WebsiteItem extends HookWidget {
         ItemTitle(data: data),
         TextField(
           controller: controller,
-          decoration: const InputDecoration(enabled: false, isDense: true),
+          decoration: const InputDecoration(
+            icon: Icon(Icons.link),
+            enabled: false,
+            isDense: true,
+          ),
         ),
       ],
     );

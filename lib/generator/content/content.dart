@@ -15,10 +15,10 @@ class Content extends HookWidget {
   final ValueNotifier<UniqueKey?> selectedItem;
 
   const Content({
-    Key? key,
+    super.key,
     required this.item,
     required this.selectedItem,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +194,7 @@ class Content extends HookWidget {
                 // todo 添加节流函数优化调用
                 onMove: onMove,
                 onLeave: onLeave,
-                onAccept: onAccept,
+                onAcceptWithDetails: onAccept,
               ),
             ),
           ),
@@ -208,8 +208,7 @@ class ContentHeader extends StatelessWidget {
   final VoidCallback save;
   final VoidCallback read;
 
-  const ContentHeader({Key? key, required this.save, required this.read})
-      : super(key: key);
+  const ContentHeader({super.key, required this.save, required this.read});
 
   @override
   Widget build(BuildContext context) {

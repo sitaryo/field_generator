@@ -8,7 +8,7 @@ import 'package:field_generator/generator/sized_box.dart';
 import 'package:flutter/material.dart';
 
 class FieldList extends StatelessWidget {
-  const FieldList({Key? key}) : super(key: key);
+  const FieldList({super.key});
 
   @override
   Widget build(BuildContext context) {

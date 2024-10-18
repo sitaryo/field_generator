@@ -11,7 +11,7 @@ class MoveLayer extends StatelessWidget {
   final VoidCallback? delete;
 
   const MoveLayer({
-    Key? key,
+    super.key,
     required this.child,
     this.moveUp,
     this.moveDown,
@@ -19,7 +19,7 @@ class MoveLayer extends StatelessWidget {
     this.moveRight,
     this.copy,
     this.delete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,28 +1,22 @@
 import 'package:field_generator/generator/model/field_data.dart';
-import 'package:field_generator/generator/model/fields/boolean.dart';
-import 'package:field_generator/generator/model/fields/multiple_text.dart';
-import 'package:field_generator/generator/model/fields/website.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-import '../model/fields/single_text.dart';
 
 class DefaultValueProperties extends StatelessWidget {
   final FieldData data;
   final VoidCallback refreshListData;
 
   const DefaultValueProperties({
-    Key? key,
+    super.key,
     required this.data,
     required this.refreshListData,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     Widget body() {
-      switch (data.runtimeType) {
-        case Boolean:
-          final d = data as Boolean;
+      switch (data) {
+        case FieldData<bool> d:
           return _BooleanDefaultValue(
             data: data,
             defaultValue: d.defaultValue ?? false,
@@ -31,12 +25,10 @@ class DefaultValueProperties extends StatelessWidget {
               refreshListData();
             },
           );
-        case SingleText:
-        case MultipleText:
-        case Website:
+        case FieldData<String> data:
           return _StringDefaultValue(
             data: data,
-            defaultValue: data.defaultValue as String?,
+            defaultValue: data.defaultValue,
             onChanged: (v) {
               data.defaultValue = v ?? "";
               refreshListData();
@@ -66,11 +58,10 @@ class _BooleanDefaultValue extends HookWidget {
   final void Function(bool?) onChanged;
 
   const _BooleanDefaultValue({
-    Key? key,
     required this.defaultValue,
     required this.onChanged,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -94,11 +85,10 @@ class _StringDefaultValue extends HookWidget {
   final void Function(String?) onChanged;
 
   const _StringDefaultValue({
-    Key? key,
     required this.defaultValue,
     required this.onChanged,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +96,7 @@ class _StringDefaultValue extends HookWidget {
 
     useEffect(() {
       controller.value.text = defaultValue ?? "";
+      return null;
     }, [data.key]);
 
     return TextField(

@@ -8,9 +8,9 @@ class SingleTextItem extends HookWidget {
   final SingleText data;
 
   const SingleTextItem({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

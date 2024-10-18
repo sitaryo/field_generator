@@ -6,9 +6,9 @@ class BooleanItem extends StatelessWidget {
   final Boolean data;
 
   const BooleanItem({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

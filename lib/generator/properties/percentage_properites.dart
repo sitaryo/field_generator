@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class PercentageProperties extends StatelessWidget {
   final List<bool> isSelected;
   final void Function(int) onPressed;
 
   const PercentageProperties({
-    Key? key,
+    super.key,
     required this.isSelected,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

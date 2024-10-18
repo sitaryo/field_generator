@@ -5,9 +5,9 @@ class ItemTitle extends StatelessWidget {
   final FieldData data;
 
   const ItemTitle({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

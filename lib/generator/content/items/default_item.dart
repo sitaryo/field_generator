@@ -5,9 +5,9 @@ class DefaultItem extends StatelessWidget {
   final FieldData data;
 
   const DefaultItem({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

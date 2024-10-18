@@ -8,10 +8,10 @@ class NameProperties extends HookWidget {
   final VoidCallback refreshListData;
 
   const NameProperties({
-    Key? key,
+    super.key,
     required this.data,
     required this.refreshListData,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

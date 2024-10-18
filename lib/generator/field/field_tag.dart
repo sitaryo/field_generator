@@ -13,8 +13,8 @@ class FieldTag extends HookWidget {
   const FieldTag(
     this.icon,
     this.dataBuilder, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -15,22 +15,22 @@ class Item extends StatelessWidget {
   final FieldData data;
 
   const Item({
-    Key? key,
+    super.key,
     required this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     Widget item() {
-      switch (data.runtimeType) {
-        case SingleText:
-          return SingleTextItem(data: data as SingleText);
-        case MultipleText:
-          return MultipleTextItem(data: data as MultipleText);
-        case Website:
-          return WebsiteItem(data: data as Website);
-        case Boolean:
-          return BooleanItem(data: data as Boolean);
+      switch (data) {
+        case SingleText data:
+          return SingleTextItem(data: data);
+        case MultipleText data:
+          return MultipleTextItem(data: data);
+        case Website data:
+          return WebsiteItem(data: data);
+        case Boolean data:
+          return BooleanItem(data: data);
         default:
           return DefaultItem(data: data);
       }
